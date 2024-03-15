@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Heading from "./components/Heading";
+import FoodItems from "./components/FoodItems";
+import ErrorMessage from "./components/ErrorMessage";
+import Container from "./components/Container";
+import FoodInput from "./components/FoodInput";
+import { useState } from "react";
+import SearchItem from "./components/SearchItem";
 
 function App() {
+  let [foodItems, setFooditems] = useState([
+    "Dal",
+    "green Chutney",
+    "cake",
+    "mango juice",
+  ]);
+
+  const onKeyDown = (event) => {
+    if (event.key === "Enter") {
+      let newItem = [...foodItems, event.target.value];
+      event.target.value = "";
+      setFooditems(newItem);
+    }
+  };
+
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <center>
+        <Container>
+          <Heading />
+          <ErrorMessage item={foodItems} />
+          <FoodInput onKeyDown={onKeyDown}></FoodInput>
+          <SearchItem items={foodItems} />
+        </Container>
+      </center>
+    </>
   );
 }
 
